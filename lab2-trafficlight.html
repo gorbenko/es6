@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES6 Class Lamp</title>
+    <style>
+        .lamp
+        {
+            border: 1px solid;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 14px;
+            line-height: 100px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .lamp_color_red
+        {
+            background-color: red;
+        }
+
+        .lamp_color_yellow
+        {
+            background-color: yellow;
+        }
+
+        .lamp_color_green
+        {
+            background-color: green;
+        }
+
+        .lamp_state_off
+        {
+            background-color: rgba(0, 0, 0, .5);
+        }
+
+        .traffic-light
+        {
+            width: 100px;
+            height: auto;
+            border: 1px solid gray;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    "use strict";
+
+    class Lamp {
+        constructor (color) {
+            this.color = color;
+            this.create();
+        }
+
+        create () {
+            let lamp = document.createElement('span');
+            lamp.classList.add('lamp');
+            lamp.classList.add('lamp_state_off');
+            lamp.classList.add('lamp_color_' + this.color);
+            this.lamp = lamp;
+        }
+
+        toggleState () {
+            this.lamp.classList.toggle('lamp_state_off');
+            return this;
+        }
+
+        off () {
+            this.lamp.classList.add('lamp_state_off');
+            return this;
+        }
+
+        /**
+         *
+         * @param {Number} duration Продолжительность, сек
+         */
+        blink (duration, cb) {
+            let self = this,
+                durationTick = 700;
+
+            duration = duration * 1000; // => ms
+
+            let endTime = new Date((new Date()).getTime() + duration);
+
+            let timer = setInterval(function () {
+                self.toggleState();
+
+                if ((new Date()).getTime() >= endTime) {
+                    clearInterval(timer);
+                    self.off();
+                    cb();
+                }
+            }, durationTick);
+        }
+
+        get () {
+            return this.lamp;
+        }
+    }
+
+    var lamp = new Lamp('green');
+
+    class TrafficLight {
+        constructor() {
+            this.create();
+            this.render();
+            this.make();
+        }
+
+        create () {
+            let box = document.createElement('div');
+            box.className = 'traffic-light';
+
+            let colors = ['red', 'yellow', 'green'];
+
+            for (let i in colors) {
+                let lamp = new Lamp(colors[i]);
+
+                this['lamp_' + colors[i]] = lamp;
+                box.appendChild(lamp.get());
+            }
+            this.box = box;
+        }
+
+        make () {
+            let self = this;
+
+            self.lamp_red.toggleState();
+
+            setTimeout(function () {
+                self.lamp_red.blink(3, function () {
+                    self.lamp_yellow.toggleState();
+
+                    setTimeout(function () {
+                        self.lamp_yellow.off();
+                        self.lamp_green.toggleState();
+
+                        setTimeout(function () {
+                            self.lamp_green.blink(3, function () {
+                                self.make();
+                            });
+                        }, 1500);
+                    }, 1500);
+                });
+            }, 1500);
+        }
+
+        render () {
+            document.querySelector('body').appendChild(this.box);
+        }
+    }
+
+    new TrafficLight();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES6 Class Lamp</title>
+    <style>
+        .lamp
+        {
+            border: 1px solid;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 14px;
+            line-height: 100px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .lamp-on
+        {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    "use strict";
+
+    class Lamp {
+        constructor(power) { // мощность
+            this.color = power;
+            this.render();
+        }
+
+        render() {
+            let lamp = this.lamp = document.createElement('span');
+            lamp.className = 'lamp';
+            lamp.innerHTML = this.color + 'W';
+            document.querySelector('body').appendChild(lamp);
+        }
+
+        toggleState() {
+            this.lamp.classList.toggle('lamp-on')
+        }
+    }
+
+    let lamp = new Lamp(60);
+
+    setInterval(function () {
+        lamp.toggleState();
+    }, 800);
+</script>
+
+</body>
+</html>
