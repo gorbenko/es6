@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="mod.js"></script>
+</head>
+<body>
+
+<script>
+    var addChange = function (ob) {
+        ob.change = function (callback) {
+            if (callback) {
+                if (!this._change) this._change = [];
+                this._change.push(callback);
+            } else {
+                if (!this._change) return;
+                for (var i = 0; i < this._change.length; i++)
+                    this._change[i].apply(this);
+            }
+        };
+    };
+
+    var object = {};
+    object.name = "Foo";
+    addChange(object);
+    object.change(function(){
+        console.log("change!", this);
+        // Потенциально здесь происходит обновление представления
+    });
+    object.change();
+    object.name = "Bar";
+    object.change();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <style>
+        #users
+        {
+            background-color: #ccc;
+        }
+    </style>
+
+    <script src='http://yastatic.net/jquery/2.1.4/jquery.min.js'></script>
+    <script src='mod.js'></script>
+
+    <script type='text/javascript' charset='utf-8'>
+        jQuery(function($){
+            exports.SearchView = Controller.create({
+                elements: {
+                    "input[type=search]": "searchInput",
+                    "form": "searchForm"
+                },
+
+                events: {
+                    "submit form": "search"
+                },
+
+                init: function(){ /* ... */ },
+
+                search: function(){
+                    alert("Searching: " + this.searchInput.val());
+                    return false;
+                },
+            });
+
+            new SearchView({el: $("#users")});
+        });
+    </script>
+</head>
+<body>
+<div id='users'>
+    <form>
+        <input type='search' value='' placeholder='Enter a query'>
+        <button>Search</button>
+    </form>
+</div>
+</body>

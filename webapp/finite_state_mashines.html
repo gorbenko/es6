@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="libs/jquery.tmpl.min.js"></script>
+    <style>
+        .ctrlName
+        {
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/x-jquery-tmpl" id="ctrlName">
+    <span>${name}</span>
+</script>
+
+<div class="ctrlName"></div>
+
+<script>
+    var Events = {
+        bind: function(){
+            if ( !this.o ) this.o = $({});
+            this.o.bind.apply(this.o, arguments);
+        },
+
+        trigger: function(){
+            if ( !this.o ) this.o = $({});
+            this.o.trigger.apply(this.o, arguments);
+        }
+    };
+
+    var StateMachine = function(){};
+    StateMachine.fn = StateMachine.prototype;
+    $.extend(StateMachine.fn, Events);
+
+    StateMachine.fn.add = function(controller){
+        this.bind("change", function(e, current){
+            if (controller == current)
+                controller.activate();
+            else
+                controller.deactivate();
+        });
+
+        controller.active = $.proxy(function(){
+            this.trigger("change", controller);
+        }, this);
+    };
+
+    var ctrl = {
+        activate: function(){
+            var elem = $("#ctrlName").tmpl({
+                name: this.name
+            });
+            $('.ctrlName').html(elem);
+            location.hash = this.name;
+        },
+        deactivate: function(){ console.log('deactivate ' + this.name); }
+    };
+
+    var ctrl1 = function () {
+        this.name = 'ctrl1';
+    };
+    ctrl1.prototype = ctrl;
+    ctrl1 = new ctrl1();
+
+    var ctrl2 = function () {
+        this.name = 'ctrl2';
+    };
+    ctrl2.prototype = ctrl;
+    ctrl2 = new ctrl2();
+
+    // Создание нового экземпляра StateMachine и добавление состояний
+    var sm = new StateMachine;
+    sm.add(ctrl1);
+    sm.add(ctrl2);
+    // Активация первого состояния
+    ctrl1.active();
+
+    // sm.trigger('change', ctrl2)
+</script>
+
+</body>
+</html>

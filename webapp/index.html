@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="mod.js"></script>
+</head>
+<body>
+
+<div id="view">123</div>
+
+<script>
+    jQuery(function ($) {
+        var ToggleView = Controller.create({
+            init: function (view) {
+                this.view = $(view);
+                this.view.on('mouseover', this.proxy(this.toggleClass));
+                this.view.on('mouseout', this.proxy(this.toggleClass));
+            },
+            toggleClass: function (e) {
+                this.view.toggleClass('over', e.data);
+            }
+        });
+
+        new ToggleView('#view');
+    });
+</script>
+
+</body>
+</html>
