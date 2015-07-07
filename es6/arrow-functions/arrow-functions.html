@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    "use strict";
+
+    var arr = ['abc', 'fooooo', 'b'];
+
+    var a1 = arr.map(function (item) {
+        return item.length;
+    });
+
+    console.log(a1);
+
+    var a2 = arr.map(item => item.length);
+
+    console.log(a2);
+
+    // Event ----------------------
+
+    document.addEventListener('click', event => console.log(event.type), false);
+
+    function Person(){
+        this.age = 0;
+
+        setInterval(() => {
+            this.age++;
+        }, 1000);
+    }
+
+    var p = new Person();
+
+    // -----------
+
+    var f = () => {return this};
+    f() === window; // or the global object
+
+    var func = () => ({ foo: 1 });
+
+    let max = (a, b) => a > b ? a : b;
+
+    console.log(max(1, 2));
+
+    () => {}
+
+</script>
+
+</body>
+</html>
