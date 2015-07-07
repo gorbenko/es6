@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    "use strict";
+    function pullOutInParams({a}, [b]) {
+        console.log(a, b);
+    }
+    function pullOutInLet(obj, arr) {
+        let {a} = obj;
+        let [b] = arr;
+        console.log(a, b);
+    }
+    pullOutInParams({a: "Hello" }, ["World"]);
+    pullOutInLet({a: "Hello" }, ["World"]);
+</script>
+
+</body>
+</html>
