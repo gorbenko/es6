@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="lib/yabble.js"></script>
+</head>
+<body>
+
+<script>
+
+require.setModuleRoot('modules');
+
+require.useScriptTags();
+
+require.ensure(['math', 'avg'], function (require) {
+    var math = require('math'),
+        avg = require('avg');
+
+    console.log(math.per(50, 100));
+    console.log(avg.avg([1, 2, 3]));
+});
+
+</script>
+
+</body>
+</html>
