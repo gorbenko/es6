@@ -40,7 +40,7 @@
     var f = () => {return this};
     f() === window; // or the global object
 
-    var func = () => ({ foo: 1 });
+    var func = () => ({ foo: 1 }); // скобки обязательны, иначе воспринимается как выражение
 
     let max = (a, b) => a > b ? a : b;
 

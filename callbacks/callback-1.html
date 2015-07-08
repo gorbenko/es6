@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    var ajax = function (params) {
+        var url = params.url;
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                params.success(xhr.response, xhr);
+            }
+        };
+
+        xhr.send(null);
+    };
+
+    ajax({
+        url: 'http://www.webpagetest.org/',
+        success: function (data, xhr) {
+            console.log(xhr);
+            console.log('Status: %s', xhr.status);
+            document.documentElement.innerHTML = data;
+        }
+    });
+
+</script>
+
+</body>
+</html>

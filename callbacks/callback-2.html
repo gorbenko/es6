@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    var ajax = {
+        doRequest: function (url, cb) {
+            var self = this;
+            var xhr = this.xhr = new XMLHttpRequest();
+
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    cb(xhr.response, xhr);
+                }
+            };
+
+            xhr.send(null);
+
+            return this;
+        },
+        onSuccess: function (cb) {
+            if (this.xhr.status === 200) {
+                cb(this.xhr);
+            }
+        }
+    };
+
+    ajax
+        .doRequest('http://www.webpagetest.org/',
+            function (data, xhr) {
+                console.log(xhr);
+                console.log('Status: %s', xhr.status);
+            })
+        .onSuccess(function (data, xhr) {
+            console.log('%c Status: %s', 'color: green;', xhr.status);
+        });
+</script>
+
+</body>
+</html>

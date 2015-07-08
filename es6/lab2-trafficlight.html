@@ -6,14 +6,15 @@
     <style>
         .lamp
         {
-            border: 1px solid;
-            border-radius: 50%;
             width: 100px;
             height: 100px;
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 50%;
+            box-shadow: inset 0px 0px 20px;
             font-size: 14px;
             line-height: 100px;
             text-align: center;
-            display: inline-block;
         }
 
         .lamp_color_red
@@ -39,9 +40,11 @@
         .traffic-light
         {
             width: 100px;
-            height: auto;
+            height: 314px;
+            padding: 10px;
             border: 1px solid gray;
             border-radius: 10px;
+            background-color: #ccc;
         }
     </style>
 </head>
@@ -57,15 +60,15 @@
         }
 
         create () {
-            let lamp = document.createElement('span');
+            var lamp = document.createElement('span');
             lamp.classList.add('lamp');
             lamp.classList.add('lamp_state_off');
             lamp.classList.add('lamp_color_' + this.color);
             this.lamp = lamp;
         }
 
-        toggleState () {
-            this.lamp.classList.toggle('lamp_state_off');
+        on () {
+            this.lamp.classList.remove('lamp_state_off');
             return this;
         }
 
@@ -74,24 +77,28 @@
             return this;
         }
 
+        toggle () {
+            this.lamp.classList.toggle('lamp_state_off');
+            return this;
+        }
+
         /**
          *
          * @param {Number} duration Продолжительность, сек
          */
         blink (duration, cb) {
-            let self = this,
-                durationTick = 700;
+            var durationTick = 700;
 
             duration = duration * 1000; // => ms
 
-            let endTime = new Date((new Date()).getTime() + duration);
+            var endTime = new Date((new Date()).getTime() + duration);
 
-            let timer = setInterval(function () {
-                self.toggleState();
+            var timer = setInterval(() => {
+                this.toggle();
 
                 if ((new Date()).getTime() >= endTime) {
                     clearInterval(timer);
-                    self.off();
+                    this.off();
                     cb();
                 }
             }, durationTick);
@@ -102,7 +109,7 @@
         }
     }
 
-    var lamp = new Lamp('green');
+    // Светофор
 
     class TrafficLight {
         constructor() {
@@ -112,13 +119,13 @@
         }
 
         create () {
-            let box = document.createElement('div');
+            var box = document.createElement('div');
             box.className = 'traffic-light';
 
-            let colors = ['red', 'yellow', 'green'];
+            var colors = ['red', 'yellow', 'green'];
 
             for (let i in colors) {
-                let lamp = new Lamp(colors[i]);
+                var lamp = new Lamp(colors[i]);
 
                 this['lamp_' + colors[i]] = lamp;
                 box.appendChild(lamp.get());
@@ -127,26 +134,29 @@
         }
 
         make () {
-            let self = this;
+            this.lamp_red.on();
 
-            self.lamp_red.toggleState();
+            // плохое решение!
+            setTimeout(() => {
+                this.lamp_red.blink(3, () => {
+                    this.lamp_yellow.on();
 
-            setTimeout(function () {
-                self.lamp_red.blink(3, function () {
-                    self.lamp_yellow.toggleState();
+                    setTimeout(() => {
+                        this.lamp_yellow.off();
+                        this.lamp_green.on();
 
-                    setTimeout(function () {
-                        self.lamp_yellow.off();
-                        self.lamp_green.toggleState();
-
-                        setTimeout(function () {
-                            self.lamp_green.blink(3, function () {
-                                self.make();
+                        setTimeout(() => {
+                            this.lamp_green.blink(3, () => {
+                                this.lamp_yellow.on();
+                                setTimeout(() => {
+                                    this.lamp_yellow.off();
+                                    this.make();
+                                }, 1500);
                             });
-                        }, 1500);
+                        }, 2000);
                     }, 1500);
                 });
-            }, 1500);
+            }, 2000);
         }
 
         render () {
@@ -155,10 +165,6 @@
     }
 
     new TrafficLight();
-
-    var message = '1 + 1 = ${1 + 1}';
-            console.log(message);
-
 </script>
 
 </body>
