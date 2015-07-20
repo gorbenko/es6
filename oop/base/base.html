@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="base.js"></script>
+</head>
+<body>
+
+<script>
+    var Man = Base.extend({
+        name: null,
+
+        constructor: function (data) {
+            Man.greet(data.name);
+        }
+    }, {
+        type: 'homosapien',
+
+        greet: function (name) {
+            console.log('Hello ' + this.type + (name && ' ' + name));
+        }
+    });
+
+    var man = new Man({ name: 'Vasya' });
+</script>
+
+</body>
+</html>
