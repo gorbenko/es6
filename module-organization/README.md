@@ -13,3 +13,6 @@ require.define({
 
 ##RequireJs
 [RequireJs](http://requirejs.org/)
+
+##LabJs
+[LABjs](https://github.com/getify/LABjs)

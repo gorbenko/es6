@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="LAB.src.js"></script>
+    <script>
+        $LAB
+            .script("https://code.jquery.com/jquery-2.1.4.min.js").wait()
+            .script("lib.js")
+            .script("utils.js")
+            .script("date.js").wait(function(){
+                console.log('Init!');
+            });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
