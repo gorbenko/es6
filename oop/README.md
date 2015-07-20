@@ -1,4 +1,5 @@
 [Понимание ООП в JavaScript [Часть 1]](http://habrahabr.ru/company/enterra/blog/153365/)
+[Классы в ECMAScript 6](http://frontender.info/es6-classes-final/)
 
 ##Дескрипторы
 Рассмотрим некоторые флаги:<br>
