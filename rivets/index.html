@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>rivets.js example</title>
+    <!--<script src="rivets-0.4.9.min.js"></script>-->
+    <script src="rivets.bundled.min.js"></script>
+    <script src="http://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="example" style="display:none">
+    <ul>
+        <li rv-each-person="people" rv-data-pid="person.id">
+            Name = <span>{person.name}</span>
+            Id = <span>{person.id}</span>
+            Test = <span  rv-nameorid="person.name"></span>
+        </li>
+    </ul>
+</div>
+<button onclick="go()">Go</button>
+
+<script>
+    var people = [{"name" : "Joe Blogs", "id" : "100"}, {"name" : "Fred Smith", "id" : ""}, {"id" : "50"}, {"name" : "", "id" : "99" }];
+
+    rivets.binders.nameorid = function (el, value) {
+
+        if (value) {
+            $(el).html(value);
+        } else {
+            $(el).html($(el).parent().data("pid"));
+        }
+    };
+
+    function go() {
+        rivets.bind($('#example').show(), { people : people });
+    }
+</script>
+
+<div id="book">
+    <b data-text="book.title"></b>
+    <p class='info' data-show='book.available'>Now Available</p>
+    <p>Cost: <span data-text='book.cost'></span></p>
+</div>
+
+<script>
+    var book = {title:'Awesome Book Title',available:true,cost:'$5.15'};
+
+    rivets.bind(document.getElementById('book'), {book: book});
+</script>
+</body>
+</html>
