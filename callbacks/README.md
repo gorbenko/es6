@@ -3,7 +3,7 @@ Synchronous XMLHttpRequest on the main thread is deprecated because of its detri
 [jquery.ajax](http://api.jquery.com/jquery.ajax/)<br>
 [xmlhttprequest.ru](http://xmlhttprequest.ru)
 
-##Задание:
+## Задание:
 Реализовать
 ```
 ajax.success().error()

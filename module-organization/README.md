@@ -1,18 +1,18 @@
-##Transport/D
+## Transport/D
 
 [Transport/D](http://wiki.commonjs.org/wiki/Modules/Transport/D)<br>
 
-##Yabble
+## Yabble
 [yabble](https://github.com/jbrantly/yabble)
 ```
 require.define({
-  "MODULE_ID": FACTORY_FUNCTION or {injects: [INJECTIONS], factory: FACTORY_FUNCTION}, 
+  "MODULE_ID": FACTORY_FUNCTION or {injects: [INJECTIONS], factory: FACTORY_FUNCTION},
   ...
 }, [ARRAY_OF_DEPENDENCY_MODULE_IDS]);
 ```
 
-##RequireJs
+## RequireJs
 [RequireJs](http://requirejs.org/)
 
-##LabJs
+## LabJs
 [LABjs](https://github.com/getify/LABjs)
